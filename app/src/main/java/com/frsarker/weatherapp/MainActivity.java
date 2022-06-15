@@ -2,10 +2,16 @@ package com.frsarker.weatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.location.Address;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import java.text.*;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,18 +21,29 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+//    @Override
+//    public void onClick(View view) {
+//        //view.getId();
+//        String cty = editText.getText().toString();
+//
+//    }
 
-    String CITY = "dhaka,bd";
+
+    String CITY = "kanpur";
     String API = "8118ed6ee68db2debfaaa5a44c832918";
 
+    Button searchButton;
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
+    EditText editText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchButton = findViewById(R.id.IDSetCity);
         addressTxt = findViewById(R.id.address);
         updated_atTxt = findViewById(R.id.updated_at);
         statusTxt = findViewById(R.id.status);
@@ -38,10 +55,38 @@ public class MainActivity extends AppCompatActivity {
         windTxt = findViewById(R.id.wind);
         pressureTxt = findViewById(R.id.pressure);
         humidityTxt = findViewById(R.id.humidity);
+        editText = findViewById(R.id.IDEditCity);
+
+
+        System.out.println("default_city = "+CITY);
+        //searchButton.setOnClickListener(this);
+        searchButton.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(), "This Button is Tapped", Toast.LENGTH_SHORT).show();
+            String city_in = editText.getText().toString();
+
+            System.out.println("new_city = "+city_in);
+
+            StringCharacterIterator var = new StringCharacterIterator(CITY);
+            var.setText(city_in);
+
+            System.out.println(CITY);
+
+            //System.out.println("new_city set to default_city successfully!");
+
+            new weatherTask().execute();
+            System.out.println("executed");
+        });
+
+
 
         new weatherTask().execute();
 
+
+
     }
+
+
+
 
 
     class weatherTask extends AsyncTask<String, Void, String> {
@@ -56,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected String doInBackground(String... args) {
-            String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
-            return response;
+            return HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
         }
 
         @Override
@@ -85,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 String weatherDescription = weather.getString("description");
 
                 String address = jsonObj.getString("name") + ", " + sys.getString("country");
-
+                //CITY = jsonObj.getString("name");
 
                 /* Populating extracted data into our views */
                 addressTxt.setText(address);

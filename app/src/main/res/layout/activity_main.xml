@@ -23,15 +23,40 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DHAKA, BD"
+                android:text="Delhi, IN"
                 android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/updated_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20 April 2012, 20:08 PM"
+                android:text="04 June 2022, 20:08 PM"
                 android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/IDEditCity"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_below = "@+id/updated_at"
+                android:paddingTop="@android:dimen/app_icon_size"
+                android:hint="Enter City Name"
+                android:background="@android:color/transparent"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:textSize="16dp"
+                android:textColorHint="#D3E5F1"
+                android:gravity="center_horizontal" />
+
+            <Button
+                android:id="@+id/IDSetCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:backgroundTintMode="multiply"
+                android:backgroundTint="@color/colorPrimary"
+                />
+
         </LinearLayout>
 
 
@@ -319,7 +344,7 @@
                         android:id="@+id/about"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="frsarker"
+                        android:text="Team BigO"
                         android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
